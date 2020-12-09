@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: myapp-deploy
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: myapp
+      release: stable
+  template:
+    metadata:
+      labels:
+        app: myapp
+        release: stable
+        env: test
+    spec:
+      containers:
+      - name: myapp
+        image: hub.atguigu.com/library/myapp:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
+

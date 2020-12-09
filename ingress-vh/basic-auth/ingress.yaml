@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata: 
+  name: ingress-with-auth
+  annotations:
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - zhaocc'
+spec:
+  rules:
+  - host: www.zhaocc4.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: app3-svc
+          servicePort: 80

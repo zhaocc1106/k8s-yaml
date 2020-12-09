@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-rewrite
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: https://www.zhaocc3.com:30233/hostname.html
+spec:
+  rules:
+  - host: re.zhaocc3.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: app3-svc
+          servicePort: 80

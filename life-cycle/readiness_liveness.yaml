@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: readiness-liveness-pod
+  namespace: default
+spec:
+  containers:
+  - name: readiness-liveness-container
+    image: hub.atguigu.com/library/myapp:v1
+    imagePullPolicy: IfNotPresent
+    lifecycle:
+      postStart:
+        exec:
+          command: ["/bin/sh", "-c", "touch /usr/share/nginx/html/index1.html && echo hello > /usr/share/nginx/html/index1.html"]
+      preStop:
+        exec:
+          command: ["bin/sh", "-c", "echo bye bye!"]
+    readinessProbe:
+      httpGet:
+        port: 80
+        path: /index1.html
+      initialDelaySeconds: 1
+      periodSeconds: 3
+    livenessProbe:
+      httpGet:
+        port: 80
+        path: /index1.html
+      initialDelaySeconds: 1
+      periodSeconds: 3
+      timeoutSeconds: 10

@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: https-ingress
+spec:
+  tls:
+  - hosts:
+    - www.zhaocc3.com
+    secretName: tls-secret
+  rules:
+  - host: www.zhaocc3.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: app3-svc
+          servicePort: 80
+    
