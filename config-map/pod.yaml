@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-test-pod
+spec:
+  containers:
+  - name: cm-test-cn
+    image: hub.atguigu.com/library/myapp:v1
+    command: ["/bin/sh", "-c", "env && cat /etc/config/log_level"]
+    env:
+    - name: LOG_LEVEL
+      valueFrom:
+        configMapKeyRef:
+          name: env-config
+          key: log_level
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+    envFrom:
+    - configMapRef:
+        name: env-config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: env-config
+  restartPolicy: Never

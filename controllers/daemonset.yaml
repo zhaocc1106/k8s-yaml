@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: deamonset-example
+  labels:
+    app: deamonset
+spec:
+  selector:
+    matchLabels:
+      name: deamonset-example
+  template:
+    metadata:
+      labels:
+        name: deamonset-example
+    spec:
+      containers:
+      - name: daemonset-example
+        image: hub.atguigu.com/library/myapp:v1
+

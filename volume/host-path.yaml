@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: host-path-pod
+spec:
+  containers:
+  - name: host-path-cn
+    image: hub.atguigu.com/my-hub/myapp:v2
+    volumeMounts:
+    - mountPath: /test
+      name: test-volume
+  volumes:
+  - name: test-volume
+    hostPath:
+      path: /data
+      type: Directory
