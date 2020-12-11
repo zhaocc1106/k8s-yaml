@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: myweb
+spec:
+  replicas: 7
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      nodeName: k8s-node02
+      containers:
+      - name: myweb
+        image: hub.atguigu.com/library/myapp:v1
+        ports:
+        - containerPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: myweb2
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: myweb2
+    spec:
+      nodeSelector:
+        type: backEndNode1 # kubectl label nodes k8s-node01 type=backEndNode1
+      containers:
+      - name: myweb2
+        image: hub.atguigu.com/library/myapp:v1
+        ports:
+        - containerPort: 80

@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity-pod1
+  labels:
+    app: node-affinity-pod1
+spec:
+  containers:
+  - name: node-affinity-cn
+    image: hub.atguigu.com/library/myapp:v1
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: # Hard policy.   
+        nodeSelectorTerms:
+        - matchExpressions: # Do not schedule to k8s-node02 hostname.
+          - key: kubernetes.io/hostname
+            operator: NotIn
+            values:
+            - k8s-node02
+      preferredDuringSchedulingIgnoredDuringExecution: # Soft policy.
+      - weight: 1
+        preference:
+          matchExpressions: # Preferred schedule to k8s-node01 hostname.
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - k8s-node01
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity-pod2
+  labels:
+    app: node-affinity-pod2
+spec:
+  containers:
+  - name: node-affinity-cn
+    image: hub.atguigu.com/library/myapp:v1
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: # Hard policy.   
+        nodeSelectorTerms:
+        - matchExpressions: # Do not schedule to k8s-node02 hostname.
+          - key: kubernetes.io/hostname
+            operator: NotIn
+            values:
+            - k8s-node01
+      preferredDuringSchedulingIgnoredDuringExecution: # Soft policy.
+      - weight: 1
+        preference:
+          matchExpressions: # Preferred schedule to k8s-node01 hostname.
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - k8s-node02
+

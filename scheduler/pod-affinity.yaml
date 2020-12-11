@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-affinity-pod
+  labels:
+    app: pod-affinity-pod
+spec:
+  containers:
+  - name: pod-affinity-cn
+    image: hub.atguigu.com/library/myapp:v1
+  affinity:
+    podAffinity: # Pod exist with pod.
+      requiredDuringSchedulingIgnoredDuringExecution: # Hard policy
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - node-affinity-pod1
+        topologyKey: kubernetes.io/hostname # Use hostname to construct topology space.
+    podAntiAffinity: # Pod don't exist with pod.
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - node-affinity-pod2
+          topologyKey: kubernetes.io/hostname # Use hostname to construct topology space.
