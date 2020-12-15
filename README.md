@@ -20,3 +20,5 @@ volume挂载写法，empty-dir，host-path。
 persist volume创建，pvc绑定。
 ## scheduler
 常见调度方式，node亲和性，pod亲和性，node绑定。
+## helm-myapp
+将app打包成helm形式。

@@ -1,0 +1,3 @@
+image:
+  repository: hub.atguigu.com/library/myapp
+  tag: 'v1'
